@@ -1,0 +1,15 @@
+doctype html
+html(lang="en")
+  head
+    title DHT Search Engine
+    include ./head.jade
+    style(type='text/css').
+      #counter{
+      color: #eee;
+      position: absolute;
+      bottom: 5px;
+      }
+  body
+    form.form-horizontal(action="/search", method="GET")
+      include ./common.jade
+    center#counter.col-xs-6.col-xs-offset-3= count

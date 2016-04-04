@@ -1,0 +1,50 @@
+doctype html
+html(lang="en")
+  head
+    title= data ? data.name : "DHT Search Engine"
+    include ./head.jade
+    style(type="text/css").
+      #torrentinfo{
+        margin-top: 20px;
+      }
+      #torrentinfo .header td {
+        background-color: #ccc;
+        font-size: medium;
+        font-weight: bold;
+        white-space: nowrap;
+      }
+      .right {
+        text-align: right;
+      }
+  body
+    form.form-horizontal(action="/search", method="GET")    
+      include ./common.jade
+      #container.col-xs-12.col-sm-12.col-lg-10.col-lg-offset-1
+        table#torrentinfo.table.table-striped.table-bordered.table-condensed
+          tbody
+            tr.header
+              td(colspan="2") Torrent Info
+            tr
+              td(width="90px") Download
+              td
+                a(href= "magnet:?xt=urn:btih:" + data.hash) [Magnet Link]
+            tr
+              td Name
+              td= data.name
+            tr
+              td Size
+              td= data.size
+            tr
+              td Add Time
+              td= new Date(data.fetched).toDateString()
+            tr
+              td Files
+              td= data.files ? data.files.length : 1
+            tr.header
+              td File Size
+              td File Name
+            if data.files
+              each file in data.files
+                tr
+                  td.right= file.size
+                  td= file.name

@@ -1,0 +1,27 @@
+doctype html
+html(lang="en")
+  head
+    title= keyword ? keyword : "DHT Search Engine"
+    include ./head.jade
+  body
+    form.form-horizontal(action="/search", method="GET")
+      include ./common.jade
+      #container.col-xs-12.col-sm-12.col-lg-10.col-lg-offset-1
+        each data in datas
+          .torrent
+            .torrentname
+              a(href="/hash/" + data.key, target="blank")= data.value.name
+            .torrentinfo
+              a(href="magnet:?xt=urn:btih:" + data.key) Magnet Link
+              - var fileCount = data.value.files ? data.value.files.length : 1
+              span= 'Files:' + fileCount
+              span= 'Score: '+ data.score + ''
+      if datas.length === 10 || (page > 1 && datas.length > 0)
+        nav.col-xs-12.col-sm-12.col-md-10.col-md-offset-1
+          ul.pager
+            li.previous(class= page > 1 ? '' : 'disabled')
+              - var purl = page > 1 ? ("/search?s=" + keyword + "&p=" + (page ? Number(page) > 1 ? Number(page)  - 1 : '' : '')) : "#"
+              a(href= purl) &lt;&lt; Previous
+            li.next(class= datas.length === 10 ? '' : 'disabled')
+              - var nurl = datas.length === 10 ? ("/search?s=" + keyword + "&p=" + (page ? Number(page) > 1 ? Number(page) + 1 : 2 : 2)) : "#"
+              a(href= nurl) Next &gt;&gt;

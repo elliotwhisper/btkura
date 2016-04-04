@@ -1,0 +1,27 @@
+{
+    "name": "btkura",
+    "description": "BTKura Website",
+    "version": "0.0.1",
+    "author": {
+	"name": "Elliot Whisper"
+    },
+    "repository": "https://github.com/elliotwhisper/btkura",
+    "main": "server.js",
+    "bugs": {
+	"url": "https://github.com/elliotwhisper/btkura/issues"
+    },
+    "scripts": {},
+    "dependencies": {
+	"express": "latest",
+	"jade": "latest",
+	"levi": "latest",
+	"levi-chinese": "latest"
+    },
+    "keywords": [
+	"torrent",
+	"bittorrent",
+	"p2p",
+	"dht"
+    ],
+    "license": "MIT"
+}
