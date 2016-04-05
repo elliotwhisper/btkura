@@ -2,7 +2,6 @@
 
 var levi = require('levi')
 var chinese = require('levi-chinese')
-
 var db = levi('/opt/btkura/kuradb')
     .use(levi.tokenizer()).use(levi.stemmer()).use(levi.stopword())
     .use(chinese.converter()).use(chinese.segmenter())
@@ -18,6 +17,7 @@ app.set("view engine", "jade");
 app.locals.db = db;
 app.locals.pretty = true;
 app.locals.count = 0;
+app.locals.hots = [];
 routes(app);
 
 var count = 0;

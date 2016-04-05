@@ -35,7 +35,10 @@ module.exports = function(app) {
 	    res.render('search', {'datas': results, 'keyword': s, 'page': p});
 	});
 	if (s){
-	    
+	    if (app.locals.hots.length > 9999){
+		app.locals.hots.shift();ls
+	    }
+	    app.locals.hots.push(s);
 	}
     });
 
