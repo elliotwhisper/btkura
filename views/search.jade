@@ -3,6 +3,11 @@ html(lang="en")
   head
     title= keyword ? keyword : "DHT Search Engine"
     include ./head.jade
+    style(type='text/css').
+      .torrentinfo span{
+        padding: 0px 10px;
+        border-right: 1px dashed #093;
+      }
   body
     form.form-horizontal(action="/search", method="GET")
       include ./common.jade
@@ -12,10 +17,12 @@ html(lang="en")
             .torrentname
               a(href="/hash/" + data.key, target="blank")= data.value.name
             .torrentinfo
-              a(href="magnet:?xt=urn:btih:" + data.key) Magnet Link
+              span
+                a(href="magnet:?xt=urn:btih:" + data.key) Magnet Link
+              span= 'Add Time: ' + new Date(data.value.fetched).toDateString()              
               - var fileCount = data.value.files ? data.value.files.length : 1
-              span= 'Files:' + fileCount
-              span= 'Score: '+ data.score + ''
+              span= 'Files: ' + fileCount
+
       if datas.length === 10 || (page > 1 && datas.length > 0)
         nav.col-xs-12.col-sm-12.col-md-10.col-md-offset-1
           ul.pager
