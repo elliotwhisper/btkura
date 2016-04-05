@@ -36,7 +36,7 @@ module.exports = function(app) {
 	});
 	if (s){
 	    if (app.locals.hots.length > 9999){
-		app.locals.hots.shift();ls
+		app.locals.hots.shift();
 	    }
 	    app.locals.hots.push(s);
 	}
