@@ -1,15 +1,11 @@
 'use strict';
 
-var levi = require('levi')
-var chinese = require('levi-chinese')
-var db = levi('/opt/btkura/kuradb')
-    .use(levi.tokenizer()).use(levi.stemmer()).use(levi.stopword())
-    .use(chinese.converter()).use(chinese.segmenter())
-
 var http = require('http');
 var path = require('path');
 var express = require('express');
 var routes = require('./routes');
+var Database = require('./database');
+var db = new Database('mongodb://localhost:27017/p2p');
 
 var app = express();
 app.set("views", path.join(__dirname, 'views'));
@@ -18,12 +14,12 @@ app.locals.db = db;
 app.locals.pretty = true;
 app.locals.count = 0;
 app.locals.hots = [];
+app.locals.hots.push('Debian');
+app.locals.hots.push('Connie Carter');
+app.locals.hots.push('Alizee');
+app.locals.hots.push('YYeTs');
+app.locals.hots.push('The Flash');
 routes(app);
-
-var count = 0;
-db.readStream().on('data', function(data){
-    app.locals.count++;
-});
 
 var server = http.createServer(app);
 server.listen(8080, '0.0.0.0', function(){

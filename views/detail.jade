@@ -27,7 +27,7 @@ html(lang="en")
             tr
               td(width="90px") Download
               td
-                a(href= "magnet:?xt=urn:btih:" + data.hash) [Magnet Link]
+                a(href= "magnet:?xt=urn:btih:" + data["_id"]) [Magnet Link]
             tr
               td Name
               td= data.name

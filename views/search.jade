@@ -12,15 +12,15 @@ html(lang="en")
     form.form-horizontal(action="/search", method="GET")
       include ./common.jade
       #container.col-xs-12.col-sm-12.col-lg-10.col-lg-offset-1
-        each data in datas
+        each meta in datas
           .torrent
             .torrentname
-              a(href="/hash/" + data.key, target="blank")= data.value.name
+              a(href="/hash/" + meta["_id"] target="blank")= meta.name
             .torrentinfo
               span
-                a(href="magnet:?xt=urn:btih:" + data.key) Magnet Link
-              span= 'Add Time: ' + new Date(data.value.fetched).toDateString()              
-              - var fileCount = data.value.files ? data.value.files.length : 1
+                a(href="magnet:?xt=urn:btih:" + meta["_id"]) Magnet Link
+              span= 'Add Time: ' + new Date(meta.fetched).toDateString()              
+              - var fileCount = meta.files ? meta.files.length : 1
               span= 'Files: ' + fileCount
 
       if datas.length === 10 || (page > 1 && datas.length > 0)

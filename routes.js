@@ -19,7 +19,10 @@ module.exports = function(app) {
     var db = app.locals.db;
 
     app.get('/', function(req, res){
-	res.render('index', {'count': app.locals.count});
+	db.count(function(count){
+	    app.locals.count = count;
+	    res.render('index', {'count': app.locals.count});	    
+	});
     });
 
     app.get('/search', function(req, res){
@@ -31,7 +34,7 @@ module.exports = function(app) {
 	    offset = (p - 1) * 10;
 	}
 	var opts = {limit: 10, offset: offset};
-	db.searchStream(s, opts).toArray(function(results){
+	db.search(s, function(results){
 	    res.render('search', {'datas': results, 'keyword': s, 'page': p});
 	});
 	if (s){
@@ -44,25 +47,26 @@ module.exports = function(app) {
 
     app.get('/hash/\\w{40}', function(req, res){
 	var hash = req.url.substr(6, 40);
-	db.get(hash, function(err, value){
-	    if (value){
+	db.get(hash, function(value){
+	    var data = value;
+	    if (data){
 		var size = 0;
-		if (value.length){
-		    value.size = calculateSize(value.length);
+		if (data.length){
+		    data.size = calculateSize(data.length);
 		}
-		if (value.files){
-		    var files = value.files;
+		if (data.files){
+		    var files = data.files;
 		    var total = 0;
 		    for (var i=0; i<files.length; i++){
 			files[i].size = calculateSize(files[i].length);
 			total += files[i].length;
 		    }
-		    if (!value.size){
-			value.size = calculateSize(total);
+		    if (!data.size){
+			data.size = calculateSize(total);
 		    }
 		}
 	    }
-	    res.render('detail', {'data' : value});
+	    res.render('detail', {'data' : data});
 	});
     });
 };

@@ -6,7 +6,7 @@
 	"name": "Elliot Whisper"
     },
     "repository": "https://github.com/elliotwhisper/btkura",
-    "main": "server.js",
+    "main": "lib/index.js",
     "bugs": {
 	"url": "https://github.com/elliotwhisper/btkura/issues"
     },
@@ -14,8 +14,7 @@
     "dependencies": {
 	"express": "latest",
 	"jade": "latest",
-	"levi": "latest",
-	"levi-chinese": "latest"
+	"mongodb": "latest"
     },
     "keywords": [
 	"torrent",
