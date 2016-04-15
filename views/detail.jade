@@ -25,7 +25,7 @@ html(lang="en")
             tr.header
               td(colspan="2") Torrent Info
             tr
-              td(width="90px") Download
+              td(width="100px") Download
               td
                 a(href= "magnet:?xt=urn:btih:" + data["_id"]) [Magnet Link]
             tr
@@ -37,6 +37,10 @@ html(lang="en")
             tr
               td Add Time
               td= new Date(data.fetched).toDateString()
+            if data.updated
+              tr
+                td Update Time
+                td= new Date(data.updated).toDateString()
             tr
               td Files
               td= data.files ? data.files.length : 1
@@ -48,3 +52,7 @@ html(lang="en")
                 tr
                   td.right= file.size
                   td= file.name
+            else
+              tr
+                td.right= data.size
+                td= data.name

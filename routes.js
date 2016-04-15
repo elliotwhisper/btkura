@@ -34,7 +34,7 @@ module.exports = function(app) {
 	    offset = (p - 1) * 10;
 	}
 	var opts = {limit: 10, offset: offset};
-	db.search(s, function(results){
+	db.search(s, offset, 10, function(results){
 	    res.render('search', {'datas': results, 'keyword': s, 'page': p});
 	});
 	if (s){

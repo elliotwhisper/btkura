@@ -38,14 +38,28 @@ var _findMany = function(db, keyword, callback){
 Database.prototype.get = function(key, callback){
     client.connect(this._dburl, function(err, db){
 	assert.equal(err, null);
-	_findOne(db, key, callback);
+//	_findOne(db, key, callback);
+	var coll = db.collection('documents');
+	coll.findOne({"_id" : key}, function(err, data){
+	    assert.equal(err, null);
+	    callback(data);
+	    db.close();
+	});
     });
 };
 
-Database.prototype.search = function(keyword, callback){
+Database.prototype.search = function(keyword, skip, limit, callback){
     client.connect(this._dburl, function(err, db){
 	assert.equal(err, null);
-	_findMany(db, keyword, callback);
+	//_findMany(db, keyword, callback);
+	var coll = db.collection('documents');
+	coll.find({$text: {$search: keyword}}, {score: {$meta: 'textScore'}})
+	    .sort({score: {$meta: "textScore"}}).skip(skip).limit(limit)
+	    .toArray(function(err, results){
+		assert.equal(err, null);
+		db.close();
+		callback(results);
+	    });
     });
 };
 
