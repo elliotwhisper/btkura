@@ -5,8 +5,12 @@ html(lang="en")
     include ./head.jade
     style(type='text/css').
       .torrentinfo span{
+        font-size: 12px;
         padding: 0px 10px;
         border-right: 1px dashed #093;
+      }
+      .torrentinfo span.last{
+        border-right: none;
       }
   body
     form.form-horizontal(action="/search", method="GET")
@@ -19,9 +23,11 @@ html(lang="en")
             .torrentinfo
               span
                 a(href="magnet:?xt=urn:btih:" + meta["_id"]) Magnet Link
-              span= 'Add Time: ' + new Date(meta.fetched).toDateString()              
+              span= 'Add Time: ' + new Date(meta.fetched).toISOString().slice(0, 10)
               - var fileCount = meta.files ? meta.files.length : 1
-              span= 'Files: ' + fileCount
+              if meta.updated
+                span= 'Update Time: ' + new Date(meta.updated).toISOString().slice(0, 10)
+              span.last= 'Files: ' + fileCount
 
       if datas.length === 10 || (page > 1 && datas.length > 0)
         nav.col-xs-12.col-sm-12.col-md-10.col-md-offset-1

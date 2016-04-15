@@ -36,11 +36,11 @@ html(lang="en")
               td= data.size
             tr
               td Add Time
-              td= new Date(data.fetched).toDateString()
+              td= new Date(data.fetched).toISOString().slice(0, 10)
             if data.updated
               tr
                 td Update Time
-                td= new Date(data.updated).toDateString()
+                td= new Date(data.updated).toISOString().slice(0, 10)
             tr
               td Files
               td= data.files ? data.files.length : 1
