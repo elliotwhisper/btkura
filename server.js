@@ -9,7 +9,7 @@ var db = new Database('mongodb://localhost:27017/p2p');
 
 var app = express();
 app.set("views", path.join(__dirname, 'views'));
-app.set("view engine", "jade");
+app.set("view engine", "pug");
 app.locals.db = db;
 app.locals.pretty = true;
 app.locals.count = 0;

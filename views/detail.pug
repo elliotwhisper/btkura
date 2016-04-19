@@ -4,7 +4,7 @@ html(lang="zh-CN")
     if data
       meta(name="keywords", content= data.name)
     title= data ? data.name : "DHT Search Engine"
-    include ./head.jade
+    include ./head.pug
     style(type="text/css").
       #torrentinfo{
         margin-top: 20px;
@@ -20,7 +20,7 @@ html(lang="zh-CN")
       }
   body
     form.form-horizontal(action="/search", method="GET")    
-      include ./common.jade
+      include ./common.pug
       #container.col-xs-12.col-sm-12.col-lg-10.col-lg-offset-1
         if data
           table#torrentinfo.table.table-striped.table-bordered.table-condensed

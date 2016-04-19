@@ -13,7 +13,7 @@
     "scripts": {},
     "dependencies": {
 	"express": "latest",
-	"jade": "latest",
+	"pug": "latest",
 	"mongodb": "latest"
     },
     "keywords": [

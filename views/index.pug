@@ -2,7 +2,7 @@ doctype html
 html(lang="zh-CN")
   head
     title DHT Search Engine
-    include ./head.jade
+    include ./head.pug
     style(type='text/css').
       #counter{
       color: #eee;
@@ -11,5 +11,5 @@ html(lang="zh-CN")
       }
   body
     form.form-horizontal(action="/search", method="GET")
-      include ./common.jade
+      include ./common.pug
     center#counter.col-xs-6.col-xs-offset-3= count

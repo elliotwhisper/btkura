@@ -2,7 +2,7 @@ doctype html
 html(lang="zh-CN")
   head
     title= keyword ? keyword : "DHT Search Engine"
-    include ./head.jade
+    include ./head.pug
     if keyword
       meta(name="keywords", content= keyword)
     style(type='text/css').
@@ -16,7 +16,7 @@ html(lang="zh-CN")
       }
   body
     form.form-horizontal(action="/search", method="GET")
-      include ./common.jade
+      include ./common.pug
       #container.col-xs-12.col-sm-12.col-lg-10.col-lg-offset-1
         each meta in datas
           .torrent
