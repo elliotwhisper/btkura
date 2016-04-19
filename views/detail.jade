@@ -1,6 +1,8 @@
 doctype html
-html(lang="en")
+html(lang="zh-CN")
   head
+    if data
+      meta(name="keywords", content= data.name)
     title= data ? data.name : "DHT Search Engine"
     include ./head.jade
     style(type="text/css").

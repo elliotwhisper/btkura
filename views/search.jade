@@ -1,8 +1,10 @@
 doctype html
-html(lang="en")
+html(lang="zh-CN")
   head
     title= keyword ? keyword : "DHT Search Engine"
     include ./head.jade
+    if keyword
+      meta(name="keywords", content= keyword)
     style(type='text/css').
       .torrentinfo span{
         font-size: 12px;
