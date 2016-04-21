@@ -26,16 +26,31 @@ module.exports = function(app) {
     });
 
     app.get('/search', function(req, res){
-	var s = req.query.s;
-	var p = req.query.p;
-	var offset = 0;
-	
-	if (p && p > 0){
-	    offset = (p - 1) * 10;
+	var p = Number.parseInt(req.query.p);
+	if (p < 1 || p > 100){
+	    res.redirect('/');
+	    return;
 	}
+	if (!p)
+	    p = 1;
+	var s = req.query.s;
+	var offset = (p - 1) * 10;
 	var opts = {limit: 10, offset: offset};
-	db.search(s, offset, 10, function(results){
-	    res.render('search', {'datas': results, 'keyword': s, 'page': p});
+	db.search(s, offset, 10, function(counts, results){
+	    var pager = {};
+	    pager.total = Math.ceil(counts / 10);
+	    if (pager.total > 1){
+		pager.page = p;
+		if (pager.page > pager.total){
+		    res.redirect('/');
+		    return;
+		}
+		if (pager.page > 1)
+		    pager.prev = pager.page - 1;
+		if (pager.page < pager.total)
+		    pager.next = pager.page + 1;
+	    }
+	    res.render('search', {'datas': results, 'keyword': s, 'pager': pager});
 	});
 	if (s){
 	    if (app.locals.hots.length > 9999){

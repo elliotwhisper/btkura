@@ -31,12 +31,18 @@ html(lang="zh-CN")
                 span= 'Update Time: ' + new Date(meta.updated).toISOString().slice(0, 10)
               span.last= 'Files: ' + fileCount
 
-      if datas.length === 10 || (page > 1 && datas.length > 0)
+      if pager.prev || pager.next
         nav.col-xs-12.col-sm-12.col-md-10.col-md-offset-1
           ul.pager
-            li.previous(class= page > 1 ? '' : 'disabled')
-              - var purl = page > 1 ? ("/search?s=" + keyword + "&p=" + (page ? Number(page) > 1 ? Number(page)  - 1 : '' : '')) : "#"
-              a(href= purl) &lt;&lt; Previous
+            li.previous(class= pager.page > 1 ? '' : 'disabled')
+              if pager.prev
+                a(href= "/search?s=" + keyword + "&p=" + pager.prev) &lt;&lt; Previous
+              else
+                a(disabled= true) &lt;&lt; Previous
+            li= pager.page + '/' + pager.total
             li.next(class= datas.length === 10 ? '' : 'disabled')
               - var nurl = datas.length === 10 ? ("/search?s=" + keyword + "&p=" + (page ? Number(page) > 1 ? Number(page) + 1 : 2 : 2)) : "#"
-              a(href= nurl) Next &gt;&gt;
+              if pager.next
+                a(href= "/search?s=" + keyword + "&p=" + pager.next) Next &gt;&gt;
+              else
+                a(disabled= true) Next &gt;&gt;

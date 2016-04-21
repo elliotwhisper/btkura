@@ -15,30 +15,9 @@ var Database = function(dburl){
     });
 };
 
-var _findOne = function(db, key, callback){
-    var coll = db.collection('documents');
-    coll.findOne({"_id" : key}, function(err, data){
-	assert.equal(err, null);
-	callback(data);
-	db.close();
-    });
-};
-
-var _findMany = function(db, keyword, callback){
-    var coll = db.collection('documents');
-    coll.find({$text: {$search: keyword}}, {score: {$meta: 'textScore'}})
-	.sort({score: {$meta: "textScore"}})
-	.toArray(function(err, results){
-	    assert.equal(err, null);
-	    db.close();
-	    callback(results);
-	});
-};
-
 Database.prototype.get = function(key, callback){
     client.connect(this._dburl, function(err, db){
 	assert.equal(err, null);
-//	_findOne(db, key, callback);
 	var coll = db.collection('documents');
 	coll.findOne({"_id" : key}, function(err, data){
 	    assert.equal(err, null);
@@ -51,15 +30,18 @@ Database.prototype.get = function(key, callback){
 Database.prototype.search = function(keyword, skip, limit, callback){
     client.connect(this._dburl, function(err, db){
 	assert.equal(err, null);
-	//_findMany(db, keyword, callback);
 	var coll = db.collection('documents');
-	coll.find({$text: {$search: keyword}}, {score: {$meta: 'textScore'}})
-	    .sort({score: {$meta: "textScore"}}).skip(skip).limit(limit)
-	    .toArray(function(err, results){
-		assert.equal(err, null);
-		db.close();
-		callback(results);
-	    });
+	var datas = coll.find({$text: {$search: keyword}}, {score: {$meta: 'textScore'}})
+	    .sort({score: {$meta: "textScore"}}).limit(1000);
+	datas.count({}, function(err, count){
+	    datas.skip(skip).limit(limit)
+		.toArray(function(err, results){
+		    assert.equal(err, null);
+		    db.close();
+		    callback(count, results);
+		});
+	});
+	
     });
 };
 

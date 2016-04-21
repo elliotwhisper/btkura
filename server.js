@@ -18,6 +18,7 @@ app.locals.hots.push('Debian');
 app.locals.hots.push('Connie Carter');
 app.locals.hots.push('Alizee');
 app.locals.hots.push('YYeTs');
+app.locals.hots.push('YYeTs人人影视');
 app.locals.hots.push('The Flash');
 routes(app);
 
